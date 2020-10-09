@@ -84,6 +84,17 @@ export default class Month extends React.Component {
     }
   };
 
+  isHighLightedMonth = m => {
+      const { day, highlightDates } = this.props;
+
+    if (!highlightDates) {
+      return false;
+    }
+
+    const monthStr = utils.formatDate(utils.setMonth(day, m), "MM.dd.yyyy");
+    return highlightDates.has(monthStr);
+  };
+
   isRangeStartMonth = m => {
     const { day, startDate, endDate } = this.props;
     if (!startDate || !endDate) {
@@ -257,7 +268,8 @@ export default class Month extends React.Component {
           day
         ),
         "react-datepicker__month--range-start": this.isRangeStartMonth(m),
-        "react-datepicker__month--range-end": this.isRangeEndMonth(m)
+        "react-datepicker__month--range-end": this.isRangeEndMonth(m),
+	"react-datepicker__month-text--highlighted": this.isHighLightedMonth(m)
       }
     );
   };
